@@ -13,11 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import DAO.BookDAO;
 import Model.Book;
 import java.util.List;
+import javax.servlet.annotation.WebServlet;
 
 /**
  *
  * @author eleazar
  */
+@WebServlet(name = "BookServlet", urlPatterns = {"/BookServlet"})
 public class BookServlet extends HttpServlet {
     private BookDAO bookDAO;
     
@@ -30,8 +32,8 @@ public class BookServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Book> books = bookDAO.getAllBooks();
-        request.setAttribute("booklist", books);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("booklist.jsp");
+        request.setAttribute("books", books);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("libreria.jsp");
         dispatcher.forward(request, response);
     }
     
@@ -45,7 +47,7 @@ public class BookServlet extends HttpServlet {
         
         Book newBook = new Book(title, author, price);
         bookDAO.addBook(newBook);
-        
-        response.sendRedirect("books");
+        request.getSession().setAttribute("message", "Libro agregado con éxito.");
+        response.sendRedirect("BookServlet");
     }
 }

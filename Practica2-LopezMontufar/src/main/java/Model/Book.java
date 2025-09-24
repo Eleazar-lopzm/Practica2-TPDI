@@ -12,6 +12,7 @@ public class Book {
     private String title;
     private String author;
     private double price;
+    private int id;
     
     // Constructor vacío
     public Book(){}
@@ -23,7 +24,20 @@ public class Book {
         this.price = price;
     }
     
+    public Book(int id, String title, String author, double price){
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.price = price;
+    }
+    
     //Getters y Setters
+    public int getId(){
+        return id;
+    }
+    public void setId(){
+        this.id = id;
+    }
     public String getTitle() {
         return title;
     }

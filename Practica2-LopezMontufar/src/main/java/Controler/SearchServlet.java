@@ -37,9 +37,9 @@ public class SearchServlet extends HttpServlet {
             String query = request.getParameter("query");
             List<Book> foundBooks = bookDAO.searchBooks(query);
 
-            request.setAttribute("booklist", foundBooks);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/libreria.jsp");
-            dispatcher.forward(request, response);
+            request.setAttribute("books", foundBooks);
+            request.getRequestDispatcher("libreria.jsp").forward(request, response);
+
         } catch (SQLException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al buscar libros.");

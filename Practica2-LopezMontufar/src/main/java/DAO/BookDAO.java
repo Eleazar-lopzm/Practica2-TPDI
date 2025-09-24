@@ -18,13 +18,13 @@ import Model.Book;
  * @author eleazar
  */
 public class BookDAO {
-    private final String jdbcURL = "jdbc:mysql:localhost:3306/bookdb";
+    private final String jdbcURL = "jdbc:mysql://localhost:3306/bookdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
     private final String jdbcUsername = "root";
     private final String jdbcPassword = "pass";
     
-    private static final String SELECT_ALL = "SELECT * FORM books";
+    private static final String SELECT_ALL = "SELECT * FROM books";
     private static final String INSERT_BOOK = "INSERT INTO books (title, author, price) VALUES (?, ?, ?)";
-    private static final String SEARCH_BOOK = "SELECT * FROM books WHERE name LIKE ? OR author LIKE ?";
+    private static final String SEARCH_BOOK = "SELECT * FROM books WHERE title LIKE ? OR author LIKE ?";
     
     // Conexión
     protected Connection getConnection() throws SQLException {
@@ -84,6 +84,7 @@ public class BookDAO {
                 String title = rs.getString("title");
                 String author = rs.getString("author");
                 double price = rs.getDouble("price");
+                
                 books.add(new Book(title, author, price));
             }
         } catch (SQLException e) {

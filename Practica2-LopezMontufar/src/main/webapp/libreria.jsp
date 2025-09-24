@@ -11,6 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Libreria</title>
+        <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
         <h1>Librería Conejo</h1>

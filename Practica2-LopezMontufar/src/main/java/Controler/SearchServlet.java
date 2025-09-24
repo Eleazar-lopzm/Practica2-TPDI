@@ -29,7 +29,8 @@ public class SearchServlet extends HttpServlet {
     public void init() {
         bookDAO = new BookDAO();
     }
-
+    
+    // Búsqueda mediante doGet 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -37,7 +38,7 @@ public class SearchServlet extends HttpServlet {
             String query = request.getParameter("query");
             List<Book> foundBooks = bookDAO.searchBooks(query);
 
-            request.setAttribute("books", foundBooks);
+            request.setAttribute("searchResults", foundBooks);
             request.getRequestDispatcher("libreria.jsp").forward(request, response);
 
         } catch (SQLException e) {

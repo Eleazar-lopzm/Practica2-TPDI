@@ -20,10 +20,43 @@
         <form action="SearchServlet" method="get">
             <label>Busqueda por autor o titulo</label>
             <input type="text" name="query"/>
+            <input type="hidden" name="action" value="search"/>
             <input type="submit" value="Buscar"/>
         </form>
+       
+            <%
+                List<Book> searchResults = (List<Book>) request.getAttribute("searchResults");
+                if (searchResults != null) {
+            %>
+            <table border="1">
+            <tr>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Precio</th>
+            </tr>
+            <%
+                if (!searchResults.isEmpty()) {
+                    for (Book book : searchResults) {
+            %>
+            <tr>
+                <td><%= book.getTitle()%></td>
+                <td><%= book.getAuthor()%></td>
+                <td><%= String.format("%.2f", book.getPrice())%></td>
+            </tr>
+            <%
+                    }
+                } else {
+            %>
+            <tr>
+                <td colspan="3">No hay libros para mostrar.</td>
+            </tr>
+            <%
+                }
+            }
+            %>
+        </table>
         
-        <h2>Añadir Libro</h2>
+        <h3>Añadir Libro</h3>
         <form action="BookServlet" method="post">
             <label>Título:</label>
             <input type="text" name="title" required/>
@@ -48,23 +81,25 @@
             }
         %>
         
-        <h2>Libros Disponibles</h2>
+        <h3>Libros Disponibles</h3>
         <form action="BookServlet" method="get">
+            <input type="hidden" name="action" value="list"/>
             <input type="submit" value="Mostrar todos los libros"/>
         </form>
+        
+        <%
+            List<Book> books = (List<Book>) request.getAttribute("books");
+            if (books != null) { 
+        %>
+        
         <table border="1">
             <tr>
                 <th>Título</th>
                 <th>Autor</th>
                 <th>Precio</th>
             </tr>
-            <%
-                // Obtener la lista de libros del request.
-                // Esta lista puede ser de todos los libros o de los resultados de búsqueda.
-                List<Book> books = (List<Book>) request.getAttribute("books");
-                
-                // Verificar si la lista no está vacía o es nula.
-                if (books != null && !books.isEmpty()) {
+            <%                
+                if (!books.isEmpty()) {
                     for (Book book : books) {
             %>
             <tr>
@@ -81,6 +116,7 @@
             </tr>
             <%
                 }
+            }
             %>
         </table>
         
